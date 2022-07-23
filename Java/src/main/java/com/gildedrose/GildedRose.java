@@ -1,6 +1,9 @@
 package com.gildedrose;
 
 class GildedRose {
+    public static final String ITEM_NAME_SULFURAS = "Sulfuras, Hand of Ragnaros";
+    public static final String ITEM_NAME_BACKSTAGE_PASSES = "Backstage passes to a TAFKAL80ETC concert";
+    public static final String ITEM_NAME_AGED_BRIE = "Aged Brie";
     Item[] items;
 
     public GildedRose(Item[] items) {
@@ -11,7 +14,7 @@ class GildedRose {
         for (int i = 0; i < items.length; i++) {
             updateQualityBeforeSellIn(i);
 
-            if (!items[i].name.equals("Sulfuras, Hand of Ragnaros")) {
+            if (!ITEM_NAME_SULFURAS.equals(items[i].name)) {
                 items[i].sellIn -= 1;
             }
 
@@ -22,11 +25,11 @@ class GildedRose {
     }
 
     private void updateQualityBeforeSellIn(int i) {
-        if (items[i].name.equals("Sulfuras, Hand of Ragnaros")) {
+        if (ITEM_NAME_SULFURAS.equals(items[i].name)) {
             return;
         }
 
-        if (items[i].name.equals("Aged Brie") || items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")) {
+        if (ITEM_NAME_AGED_BRIE.equals(items[i].name) || ITEM_NAME_BACKSTAGE_PASSES.equals(items[i].name)) {
             increaseQuality(i);
             return;
         }
@@ -39,7 +42,7 @@ class GildedRose {
     private void increaseQuality(int i) {
         tryToIncrementQuality(i);
 
-        if (items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")) {
+        if (ITEM_NAME_BACKSTAGE_PASSES.equals(items[i].name)) {
             if (items[i].sellIn < 11) {
                 tryToIncrementQuality(i);
             }
@@ -50,16 +53,16 @@ class GildedRose {
     }
 
     private void updateQualityAfterSellDay(int i) {
-        if (items[i].name.equals("Sulfuras, Hand of Ragnaros")) {
+        if (ITEM_NAME_SULFURAS.equals(items[i].name)) {
             return;
         }
 
-        if (items[i].name.equals("Aged Brie")) {
+        if (ITEM_NAME_AGED_BRIE.equals(items[i].name)) {
             tryToIncrementQuality(i);
             return;
         }
 
-        if (items[i].name.equals("Backstage passes to a TAFKAL80ETC concert")) {
+        if (ITEM_NAME_BACKSTAGE_PASSES.equals(items[i].name)) {
             items[i].quality = 0;
             return;
         }
