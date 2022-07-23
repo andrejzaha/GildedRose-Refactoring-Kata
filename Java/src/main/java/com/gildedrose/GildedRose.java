@@ -17,67 +17,69 @@ class GildedRose {
     }
 
     public void updateQuality() {
-        for (int i = 0; i < items.size(); i++) {
-            if (ITEM_NAME_SULFURAS.equals(items.get(i).name)) {
-                continue;
-            }
-
-            updateQualityBeforeSellIn(i);
-
-            items.get(i).sellIn -= 1;
-
-            if (items.get(i).sellIn < 0) {
-                updateQualityAfterSellDay(i);
-            }
-        }
+        items.forEach(this::processItem);
     }
 
-    private void updateQualityBeforeSellIn(int i) {
-        if (ITEM_NAME_AGED_BRIE.equals(items.get(i).name) || ITEM_NAME_BACKSTAGE_PASSES.equals(items.get(i).name)) {
-            increaseQuality(i);
+    private void processItem(Item item) {
+        if (ITEM_NAME_SULFURAS.equals(item.name)) {
             return;
         }
 
-        decrementQuality(i);
-    }
+        updateQualityBeforeSellIn(item);
 
-    private void increaseQuality(int i) {
-        incrementQuality(i);
+        item.sellIn -= 1;
 
-        if (ITEM_NAME_BACKSTAGE_PASSES.equals(items.get(i).name)) {
-            if (items.get(i).sellIn < 11) {
-                incrementQuality(i);
-            }
-            if (items.get(i).sellIn < 6) {
-                incrementQuality(i);
-            }
+        if (item.sellIn < 0) {
+            updateQualityAfterSellDay(item);
         }
     }
 
-    private void updateQualityAfterSellDay(int i) {
-        if (ITEM_NAME_AGED_BRIE.equals(items.get(i).name)) {
-            incrementQuality(i);
+    private void updateQualityBeforeSellIn(Item item) {
+        if (ITEM_NAME_AGED_BRIE.equals(item.name) || ITEM_NAME_BACKSTAGE_PASSES.equals(item.name)) {
+            increaseQuality(item);
             return;
         }
 
-        if (ITEM_NAME_BACKSTAGE_PASSES.equals(items.get(i).name)) {
-            items.get(i).quality = 0;
+        decrementQuality(item);
+    }
+
+    private void increaseQuality(Item item) {
+        incrementQuality(item);
+
+        if (ITEM_NAME_BACKSTAGE_PASSES.equals(item.name)) {
+            if (item.sellIn < 11) {
+                incrementQuality(item);
+            }
+            if (item.sellIn < 6) {
+                incrementQuality(item);
+            }
+        }
+    }
+
+    private void updateQualityAfterSellDay(Item item) {
+        if (ITEM_NAME_AGED_BRIE.equals(item.name)) {
+            incrementQuality(item);
+            return;
+        }
+
+        if (ITEM_NAME_BACKSTAGE_PASSES.equals(item.name)) {
+            item.quality = 0;
             return;
         }
 
 
-        decrementQuality(i);
+        decrementQuality(item);
     }
 
-    private void incrementQuality(int i) {
-        if (items.get(i).quality < 50) {
-            items.get(i).quality += 1;
+    private void incrementQuality(Item item) {
+        if (item.quality < 50) {
+            item.quality += 1;
         }
     }
 
-    private void decrementQuality(int i) {
-        if (items.get(i).quality > 0) {
-            items.get(i).quality -= 1;
+    private void decrementQuality(Item item) {
+        if (item.quality > 0) {
+            item.quality -= 1;
         }
     }
 
